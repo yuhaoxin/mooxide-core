@@ -1,0 +1,27 @@
+[package]
+name = "mooxide-ffi"
+description = "mooxide 的 C ABI 绑定，配套 cbindgen 生成头文件"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+mooxide-proto = { path = "../mooxide-proto", version = "0.1.0" }
+
+# C ABI 边界必须手写 unsafe；其余 lint（unwrap/expect 禁用等）与 workspace 一致。
+[lints.rust]
+unsafe_code = "allow"
+
+[lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+undocumented_unsafe_blocks = "deny"
+
+[package.metadata.cbindgen]
+language = "c"
+include_guard = "MOOXIDE_FFI_H"
+after_includes = "\n// 头文件由 cbindgen 生成，不要手改；重新生成：cargo xtask ffi-header"

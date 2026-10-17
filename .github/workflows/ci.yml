@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: test
+        run: cargo test --workspace
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: fmt
+        run: cargo fmt --all -- --check
+      - name: clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: cargo-deny
+        uses: EmbarkStudios/cargo-deny-action@v2
+      - name: typos
+        uses: crate-ci/typos@v1
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+      - uses: Swatinem/rust-cache@v2
+      - name: install cargo-llvm-cov
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-llvm-cov
+      - name: coverage
+        run: cargo xtask coverage
+      - name: upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lcov-report
+          path: lcov.info
+
+  ffi-header-fresh:
+    # 校验 include/mooxide/mooxide.h 与源码同步
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: regenerate and diff
+        run: |
+          cargo xtask ffi-header
+          git diff --exit-code -- include/mooxide/mooxide.h

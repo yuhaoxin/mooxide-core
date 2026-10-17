@@ -1,0 +1,26 @@
+[package]
+name = "mooxide-apps"
+description = "MOOS 应用集合：antler 进程启动器、logger 数据记录器等"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[[bin]]
+name = "mooxide-antler"
+path = "src/bin/antler.rs"
+
+[[bin]]
+name = "mooxide-logger"
+path = "src/bin/logger.rs"
+
+[dependencies]
+mooxide-comms = { path = "../mooxide-comms", version = "0.1.0" }
+mooxide-log = { path = "../mooxide-log", version = "0.1.0" }
+mooxide-proto = { path = "../mooxide-proto", version = "0.1.0" }
+anyhow.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

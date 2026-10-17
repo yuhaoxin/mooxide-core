@@ -1,0 +1,13 @@
+[package]
+name = "mooxide-test"
+description = "测试辅助：内存 mock 服务端/客户端与报文回放，不产生 socket IO"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dependencies]
+mooxide-proto = { path = "../mooxide-proto", version = "0.1.0" }
+
+[lints]
+workspace = true

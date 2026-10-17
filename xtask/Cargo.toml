@@ -1,0 +1,19 @@
+[package]
+name = "xtask"
+description = "仓库任务运行器：lint / test / coverage / ffi-header"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+publish = false
+
+[[bin]]
+name = "xtask"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+cbindgen.workspace = true
+
+[lints]
+workspace = true

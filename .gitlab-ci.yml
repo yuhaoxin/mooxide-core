@@ -1,0 +1,22 @@
+# GitLab 镜像侧精简 CI：Linux x86 只跑核心检查；macOS 覆盖由 GitHub Actions 承担。
+
+stages:
+  - check
+
+variables:
+  CARGO_TERM_COLOR: always
+
+default:
+  image: rust:latest
+
+test:
+  stage: check
+  script:
+    - cargo test --workspace
+
+clippy:
+  stage: check
+  before_script:
+    - rustup component add clippy
+  script:
+    - cargo clippy --workspace --all-targets -- -D warnings

@@ -1,0 +1,16 @@
+[package]
+name = "mooxide-comms"
+description = "MOOS 异步客户端通信库，对应原版 MOOSLib"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dependencies]
+mooxide-proto = { path = "../mooxide-proto", version = "0.1.0" }
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

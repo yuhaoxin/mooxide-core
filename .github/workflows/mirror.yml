@@ -1,0 +1,25 @@
+# GitHub 主仓库到 GitLab 镜像（mooxide 组下 mooxide-core，私有）的自动同步。
+# 凭据：GITLAB_MIRROR_TOKEN（Project Access Token，write_repository 权限）。
+name: mirror
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: push mirror
+        run: |
+          git remote add mirror "https://oauth2:${GITLAB_MIRROR_TOKEN}@${GITLAB_HOST}/${GITLAB_PATH}.git"
+          git push --all --force mirror
+          git push --tags --force mirror
+        env:
+          GITLAB_MIRROR_TOKEN: ${{ secrets.GITLAB_MIRROR_TOKEN }}
+          GITLAB_HOST: auv.yuhaoxin0613.cn
+          GITLAB_PATH: mooxide/mooxide-core

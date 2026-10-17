@@ -1,0 +1,39 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/mooxide-proto",
+    "crates/mooxide-comms",
+    "crates/mooxide-db",
+    "crates/mooxide-apps",
+    "crates/mooxide-ffi",
+    "crates/mooxide-log",
+    "crates/mooxide-test",
+    "xtask",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "LGPL-3.0-or-later"
+repository = "https://github.com/yuhaoxin/mooxide-core"
+authors = ["yuhaoxin"]
+
+[workspace.dependencies]
+anyhow = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+thiserror = "2"
+cbindgen = "0.29"
+
+mooxide-log = { path = "crates/mooxide-log", version = "0.1.0" }
+
+# 全仓库共享 lint 基线，各 crate 通过 `[lints] workspace = true` 继承。
+[workspace.lints.rust]
+unsafe_code = "deny"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+undocumented_unsafe_blocks = "deny"

@@ -1,0 +1,12 @@
+[package]
+name = "mooxide-proto"
+description = "MOOS 线协议报文类型与编解码，以及 .moos 任务文件解析"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dependencies]
+
+[lints]
+workspace = true

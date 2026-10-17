@@ -1,0 +1,22 @@
+[package]
+name = "mooxide-db"
+description = "MOOSDB 服务端，中央发布/订阅枢纽"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[[bin]]
+name = "mooxide-db"
+path = "src/main.rs"
+
+[dependencies]
+mooxide-comms = { path = "../mooxide-comms", version = "0.1.0" }
+mooxide-log = { path = "../mooxide-log", version = "0.1.0" }
+mooxide-proto = { path = "../mooxide-proto", version = "0.1.0" }
+anyhow.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true
