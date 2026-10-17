@@ -1,4 +1,14 @@
 # cargo-deny 配置：依赖许可证白名单 + 安全公告检查。运行入口 `cargo xtask lint`。
 
 [licenses]
+# 这是策略白名单，不是当前依赖图的快照：本仓库整体 GPL-3.0-or-later、
+# 库 crate 另可 LGPL-3.0-or-later，因此 GPL 系依赖本就允许，
+# 即便当前没有依赖命中也不该报 `license-not-encountered`。
 allow = ["MIT", "Apache-2.0", "MPL-2.0", "Unicode-3.0", "LGPL-3.0-or-later", "GPL-3.0-or-later"]
+unused-allowed-license = "allow"
+
+[bans]
+# 两个 crate 的重复版本都来自构建期工具链的传递依赖，本仓库无法统一：
+# cbindgen 依赖 syn 2 / winnow 0.7，serde_derive 依赖 syn 3、toml_parser 依赖 winnow 1。
+# 其余 crate 仍按默认规则报告重复版本。
+skip = [{ name = "syn" }, { name = "winnow" }]
