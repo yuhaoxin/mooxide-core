@@ -4,8 +4,22 @@ A modern Rust reimplementation of [MOOS](https://oceanai.mit.edu/moos-ivp/pmwiki
 (Mission Orientated Operating Suite) — the publish/subscribe middleware for robotics —
 wire-protocol compatible with the original C++ implementation.
 
+[简体中文](README.zh-CN.md)
+
 **Status: early skeleton.** The workspace layout, CI, testing, and FFI scaffolding are
 in place; protocol work has not started yet.
+
+## Project intent
+
+This is a learning project: I am learning Rust by building it under AI guidance. It is
+not middleware you should deploy.
+
+- Crate boundaries and APIs change as my learning progresses; I do not promise semver
+  stability.
+- Known gaps are tracked as `TODO`/`FIXME` or issues, and incomplete work is stated as
+  incomplete rather than presented as delivered.
+- The compatibility target is still byte-level wire protocol parity; being a learning
+  project is not a reason to lower the acceptance bar.
 
 ## Goals
 
